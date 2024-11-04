@@ -1,60 +1,13 @@
-<!doctype html>
-<html lang="sv">
-<head>
-	<meta charset="utf-8">
-	<title>Länka in sidor med PHP</title>
-	<link href="../css/styleSheet.css" rel="stylesheet" type="text/css">
-</head>
+<h1>Min Blogg</h1>
 
-<body>
-	<div id="wrapper">
-		<header>
-      		<h1>Webbserverprogrammering 1 med Bygren</h1>
-      	</header>
-		<!-- header -->
+<article class="blog-post">
+    <h2>Mitt första PHP-projekt</h2>
+    <time datetime="2024-11-04">4 november 2024</time>
+    <p>Idag har jag börjat arbeta med mitt första PHP-projekt. Det har varit både utmanande och lärorikt att sätta upp en grundläggande webbplats med PHP...</p>
+</article>
 
-		<section id="leftColumn">
-			<nav>
-	        	<h1>Innehåll</h1>
-				<ul>
-					<li><a href="index.php">Hem</a></li>
-					<li><a href="blogg.php">Blogg</a></li>
-					<li><a href="bilder.php">Bilder</a></li>
-					<li><a href="Kontakt.php">Kontakt</a></li>
-				</ul>
-	        </nav>
-			<aside>
-				<h1>Namn</h1>
-				<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-				Nulla tristique elementum nisl, et vehicula neque laoreet ut. 
-				Praesent sed ultrices purus.
-				</p>
-		  	</aside>
-		</section>
-		<!-- End leftColumn -->
-
-		<main role="main">
-		<section>
-			<hgroup>
-				<h1>Min blogg Nu</h1>
-				<h2>I dag gör vi mallar</h2>
-			</hgroup>
-			<p>Lorem ipsum id duo autem qualisque, cu laoreet eleifend cum. Eu sea 
-					vidit altera civibus, harum deserunt argumentum ne vim. Eu paulo 
-					corpora appareat pro, brute everti iuvaret ne vis. Diam incorrupte 
-					voluptatibus cu vel, nam congue soluta praesent at.
-			</p>    
-	  	</section>
-		</main>
-		<!-- End main -->
-
-		<footer>
-        	<span id="footerLeft">© Sidlayoutarna</span>
-			<span id="footerRight"><a href="mailto:xxx@doman">xxx@doman</a></span>
-      </footer>
-		<!-- End footer -->
-	</div>
-	<!-- End wrapper -->
-</body>
-</html>
+<article class="blog-post">
+    <h2>Lärdomar från webbutveckling</h2>
+    <time datetime="2024-11-03">3 november 2024</time>
+    <p>Efter några veckor med webbutveckling har jag lärt mig mycket om strukturering av kod och vikten av god planering...</p>
+</article>
