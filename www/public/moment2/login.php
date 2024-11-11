@@ -1,64 +1,63 @@
 <?php
-require_once('Person.php');
-mb_internal_encoding("UTF-8");
+require_once('../moment2/Person.php');
+session_start();
 
-//Kollar först om användarnamn är satta.
-if (!isset($_POST['username']) || !isset($_POST['password'])) {
-    header('Location: index.html');
+// Om man redan är inloggan så redirecta till index.php
+if(isset($_SESSION['user'])) {
+    header('Location: index.php');
     exit();
 }
 
-// htmlspecialchars=Skyddar mot XSS attack, exempel script tagget. Striplashes= Ta bort \, förhindra injenktioner. trim=Ta bort whitespace (t.e.x mellanslag)
-$username = trim(stripslashes(htmlspecialchars($_POST['username'])));
-$password = trim(stripslashes(htmlspecialchars($_POST['password'])));
-
-// Kollar efter UTF-8 format.
-if (!mb_check_encoding($username) || !mb_check_encoding($password)) {
-    header('Location: index.html');
-    exit();
-}
-
-$file = "../../users.dat";  // Filväg till användarna
-
-if (file_exists($file)) {
-    $users = unserialize(file_get_contents($file));
-    $found = false;
-
-    foreach ($users as $user) {
-        if ($user->getUsername() === $username && $user->getPassword() === $password) {
-            $found = true;
-            //Outputen för lyckad inloggning.
-            header('Content-Type: text/html; charset=utf-8');
-            echo '<!DOCTYPE html>
-                <html lang="sv">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Användarinformation</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; }
-                        .user-info { background: #f5f5f5; padding: 20px; border-radius: 5px; }
-                    </style>
-                </head>
-                <body>
-                    <div class="user-info">
-                        <h2>Välkommen ' . htmlspecialchars($user->getFirstName()) . '!</h2>
-                        <p><strong>Förnamn:</strong> ' . htmlspecialchars($user->getFirstName()) . '</p>
-                        <p><strong>Efternamn:</strong> ' . htmlspecialchars($user->getLastName()) . '</p>
-                        <p><strong>Användarnamn:</strong> ' . htmlspecialchars($user->getUsername()) . '</p>
-                    </div>
-                    <p><a href="index.html">Logga ut</a></p>
-                </body>
-                </html>';
-            break;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['username']) && isset($_POST['password'])) {
+        $username = trim(stripslashes(htmlspecialchars($_POST['username'])));
+        $password = trim(stripslashes(htmlspecialchars($_POST['password'])));
+        
+        $file = "../../users.dat";
+        
+        if (file_exists($file)) {
+            $users = unserialize(file_get_contents($file));
+            foreach ($users as $user) {
+                if ($user->getUsername() === $username && $user->getPassword() === $password) {
+                    $_SESSION['user'] = $user;
+                    header('Location: index.php');
+                    exit();
+                }
+            }
         }
+        $error = "Felaktigt användarnamn eller lösenord";
     }
-
-    if (!$found) {
-        header('Location: index.html');
-        exit();
-    }
-} else {
-    header('Location: index.html');
-    exit();
 }
-?> 
+?>
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="css/styleSheet.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <h1>Webbserverprogrammering 1</h1>
+        </header>
+        <main>
+            <h2>Logga in</h2>
+            <?php if(isset($error)) echo "<p style='color: red'>$error</p>"; ?>
+            <form action="login.php" method="post">
+                <div class="form-group">
+                    <label for="username">Användarnamn:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Lösenord:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <input type="submit" value="Logga in">
+            </form>
+            <p><a href="../moment2/register.html">Registrera ny användare</a></p>
+        </main>
+    </div>
+</body>
+</html>

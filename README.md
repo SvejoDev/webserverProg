@@ -16,7 +16,7 @@
 ##### Serverns url
     localhost
 ##### phpmyadmin
-    localhost:8080
+        localhost:8080
 ##### Anslut till MariaDB med php
 
 ````php

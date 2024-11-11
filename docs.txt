@@ -1,0 +1,60 @@
+Klotterplanket
+Vi kommer här skapa ett mycket enkelt klotterplank. Här skall man kunna skriva in sitt namn och sedan skriva en kommentar som sparas på servern i en fil.
+Först skapar vi själva gränssnittet mot användaren (klotter.php) och sedan sparafunktionen (saveMsg.php).
+klotter.php
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Klotterplank</title>
+</head>
+
+<body>
+<h1>Klotterplanket</h1>
+
+<form action="saveMsg.php" method="post">
+    <label>Namn</label><br>
+    <input type="text" name="name"><br />
+
+    <label>Meddelande</label><br>
+    <textarea name="message" cols="45" rows="5"></textarea><br />    
+    <input type="submit" value="Skicka">
+</form>
+
+<?php 
+    /**
+     * Om filen finns så skrivs innehållet ut
+     * Om den inte finns så skapas en tom fil med namnet msg.dat
+     * Vid problem ändra rättigheterna på filen msg.dat.
+     *
+     * OBS! Sökvägen nedan till 'msg.dat' kan behövas ändras. 
+     */
+    if(file_exists("msg.dat")){
+        echo file_get_contents("msg.dat");
+    }
+?>
+</body>
+</html>
+
+
+saveMsg.php
+<?php
+    /**
+     * Formaterar och sparar namn samt meddelande till filen
+     * msg.dat
+     * 
+     * Programmet saknar nödvändiga kontroller
+     * @author Henrik Bygren
+     */
+     
+    $name = "<hr><p>Från: " . $_POST['name'] . "</p>";
+    $msg = "<p>" . $_POST['message'] . "</p>";
+    
+    file_put_contents("msg.dat",$name.$msg,FILE_APPEND);
+    
+    header("location: klotter.php"); //Omdirigerar till klotterplanket
+?>
+
+
+Programmet borde skapa filen msg.dat första gången den körs. Men på Mac-datorerna fungerar inte detta p.g.a filrättigheter. Du får därför skapa filen själv utan något innehåll. Ändra sedan rättigheterna för filen. Var filen skall placeras beror på var saveMsg.php ligger. Detta innebär att msg.dat skall ligga i samma katalog som saveMsg.php.
